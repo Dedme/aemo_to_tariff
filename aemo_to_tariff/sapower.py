@@ -17,6 +17,7 @@ tariffs = {
         'name': 'Residential Time of Use',
         'periods': [
             ('Peak', time(14, 0), time(20, 0), 18.79),
+            ('Peak', time(6, 0), time(10, 0), 18.79),
             ('Off-peak', time(20, 0), time(14, 0), 7.56),
             ('Solar Sponge', time(10, 0), time(15, 0), 3.81)
         ]
@@ -25,6 +26,7 @@ tariffs = {
         'name': 'Residential Prosumer',
         'periods': [
             ('Peak', time(14, 0), time(20, 0), 18.79),
+            ('Peak', time(6, 0), time(10, 0), 18.79),
             ('Off-peak', time(20, 0), time(14, 0), 7.56),
             ('Solar Sponge', time(10, 0), time(15, 0), 3.81)
         ]
@@ -33,6 +35,7 @@ tariffs = {
         'name': 'Residential Electrify',
         'periods': [
             ('Peak', time(14, 0), time(20, 0), 33.09),
+            ('Peak', time(6, 0), time(10, 0), 18.79),
             ('Off-peak', time(20, 0), time(14, 0), 9.78),
             ('Solar Sponge', time(10, 0), time(15, 0), 3.01)
         ]
