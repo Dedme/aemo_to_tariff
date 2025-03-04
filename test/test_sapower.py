@@ -21,3 +21,28 @@ class TestSAPower(unittest.TestCase):
         price = sapower.convert(interval_time, tariff_code, rrp)
         loss_factor = expected_price / price
         self.assertAlmostEqual(price * 1.1678, expected_price, places=1)
+    
+    def test_two_way_tou_peak(self):
+        interval_time = datetime(2025, 2, 20, 18, 10, tzinfo=ZoneInfo('Australia/Adelaide'))
+        tariff_code = 'RELE2W'
+        rrp = -76.53
+        expected_price = 29.705328600000005
+        price = sapower.convert(interval_time, tariff_code, rrp)
+        loss_factor = expected_price / price
+        self.assertAlmostEqual(price * 1.1678, expected_price, places=1)
+    
+    def test_two_way_tou_feed_peak(self):
+        interval_time = datetime(2025, 2, 20, 18, 10, tzinfo=ZoneInfo('Australia/Adelaide'))
+        tariff_code = 'RELE2W'
+        rrp = 100
+        expected_price = 22.36
+        price = sapower.convert_feed_in_tariff(interval_time, tariff_code, rrp)
+        self.assertAlmostEqual(price, expected_price, places=1)
+    
+    def test_two_way_tou_feed_off_peak(self):
+        interval_time = datetime(2025, 2, 20, 13, 10, tzinfo=ZoneInfo('Australia/Adelaide'))
+        tariff_code = 'RELE2W'
+        rrp = 100
+        expected_price = 10.0
+        price = sapower.convert_feed_in_tariff(interval_time, tariff_code, rrp)
+        self.assertAlmostEqual(price, expected_price, places=1)

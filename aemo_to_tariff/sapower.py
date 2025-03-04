@@ -6,6 +6,18 @@ def time_zone():
     return 'Australia/Adelaide'
 
 
+feed_in_tariffs = {
+    'RELE2W': {
+        'name': 'Residential Electrify',
+        'periods': [
+            ('Peak', time(14, 0), time(20, 0), 12.36),
+            ('Peak', time(6, 0), time(10, 0), 12.36),
+            ('Off-peak', time(20, 0), time(14, 0), 0),
+            ('Solar Sponge', time(10, 0), time(15, 0), -1)
+        ]
+    }
+}
+
 tariffs = {
     'RSR': {
         'name': 'Residential Single Rate',
@@ -36,6 +48,15 @@ tariffs = {
         'periods': [
             ('Peak', time(14, 0), time(20, 0), 33.09),
             ('Peak', time(6, 0), time(10, 0), 18.79),
+            ('Off-peak', time(20, 0), time(14, 0), 9.78),
+            ('Solar Sponge', time(10, 0), time(15, 0), 3.01)
+        ]
+    },
+    'RELE2W': {
+        'name': 'Residential Electrify',
+        'periods': [
+            ('Peak', time(14, 0), time(20, 0), 33.09),
+            ('Peak', time(6, 0), time(10, 0), 33.09),
             ('Off-peak', time(20, 0), time(14, 0), 9.78),
             ('Solar Sponge', time(10, 0), time(15, 0), 3.01)
         ]
@@ -77,6 +98,32 @@ def get_periods(tariff_code: str):
         raise ValueError(f"Unknown tariff code: {tariff_code}")
 
     return tariff['periods']
+
+def convert_feed_in_tariff(interval_datetime: datetime, tariff_code: str, rrp: float):
+    """
+    Convert RRP from $/MWh to c/kWh for SA Power Networks.
+
+    Parameters:
+    - interval_datetime (datetime): The interval datetime.
+    - tariff_code (str): The tariff code.
+    - rrp (float): The Regional Reference Price in $/MWh.
+
+    Returns:
+    - float: The price in c/kWh.
+    """
+    interval_time = interval_datetime.astimezone(ZoneInfo(time_zone())).time()
+    rrp_c_kwh = rrp / 10
+    
+    feed_in_tariff = feed_in_tariffs.get(tariff_code)
+    if not feed_in_tariff:
+        return rrp_c_kwh
+    
+    for period, start, end, rate in feed_in_tariff['periods']:
+        if start <= interval_time < end or (start > end and (interval_time >= start or interval_time < end)):
+            total_price = rrp_c_kwh + rate
+            return total_price
+
+    return rrp_c_kwh
 
 def convert(interval_datetime: datetime, tariff_code: str, rrp: float):
     """

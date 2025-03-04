@@ -1,9 +1,15 @@
 import unittest
 from datetime import datetime
 from zoneinfo import ZoneInfo
-from aemo_to_tariff.endeavour import convert, time_zone
+from aemo_to_tariff.endeavour import convert, convert_feed_in_tariff, time_zone
 
 class TestEndeavour(unittest.TestCase):
+    def test_convert_feed_in(self):
+        interval_time = datetime(2023, 1, 15, 17, 0, tzinfo=ZoneInfo(time_zone()))
+        tariff_code = 'N71'
+        feed_in_price = convert_feed_in_tariff(interval_time, tariff_code, 100.0)
+        self.assertAlmostEqual(feed_in_price, 10.00, places=1)
+        
     def test_convert_high_season_peak(self):
         interval_time = datetime(2023, 1, 15, 17, 0, tzinfo=ZoneInfo(time_zone()))
         tariff_code = 'N71'

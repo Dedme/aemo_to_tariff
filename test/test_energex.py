@@ -4,6 +4,12 @@ from zoneinfo import ZoneInfo
 import aemo_to_tariff.energex as energex
 
 class TestEnergex(unittest.TestCase):
+    def test_feed_in_convert(self):
+        interval_time = datetime(2023, 1, 15, 17, 0, tzinfo=ZoneInfo('Australia/Brisbane'))
+        tariff_code = '6900'
+        feed_in_price = energex.convert_feed_in_tariff(interval_time, tariff_code, 100.0)
+        self.assertAlmostEqual(feed_in_price, 10.00, places=1)
+
     def test_convert(self):
         interval_time = datetime(2023, 7, 15, 10, 0, tzinfo=ZoneInfo('Australia/Brisbane'))
         tariff_code = '6900'

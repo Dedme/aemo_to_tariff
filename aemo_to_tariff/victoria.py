@@ -148,6 +148,22 @@ def get_periods(tariff_code: str):
         raise ValueError(f"Unknown tariff code: {tariff_code}")
     return tariff['periods']
 
+def convert_feed_in_tariff(interval_datetime: datetime, tariff_code: str, rrp: float):
+    """
+    Convert RRP from $/MWh to c/kWh for SA Power Networks.
+
+    Parameters:
+    - interval_datetime (datetime): The interval datetime.
+    - tariff_code (str): The tariff code.
+    - rrp (float): The Regional Reference Price in $/MWh.
+
+    Returns:
+    - float: The price in c/kWh.
+    """
+    rrp_c_kwh = rrp / 10
+    
+    return rrp_c_kwh
+
 def convert(interval_datetime: datetime, tariff_code: str, rrp: float):
     """
     Convert RRP from $/MWh to c/kWh for a Victorian network.

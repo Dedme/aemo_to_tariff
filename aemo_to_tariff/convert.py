@@ -51,6 +51,47 @@ def spot_to_tariff(interval_time, network, tariff, rrp,
     else:
         raise ValueError(f"Unknown network: {network}")
 
+def spot_to_feed_in_tariff(interval_time, network, tariff, rrp,
+                           dlf=1.05905, mlf=1.0154, market=1.0154):
+    """
+    Convert spot price from $/MWh to c/kWh for a given network and tariff.
+
+    Parameters:
+    - interval_time (str): The interval time.
+    - network (str): The name of the network (e.g., 'Energex', 'Ausgrid', 'Evoenergy').
+    - tariff (str): The tariff code (e.g., '6970', '017').
+    - rrp (float): The Regional Reference Price in $/MWh.
+    - dlf (float): The Distribution Loss Factor.
+    - mlf (float): The Metering Loss Factor.
+    - market (float): The market factor.
+
+    Returns:
+    - float: The price in c/kWh.
+    """
+    adjusted_rrp = rrp * dlf * mlf * market
+    network = network.lower()
+
+    if network == 'energex':
+        return energex.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
+    elif network == 'ausgrid':
+        return ausgrid.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
+    elif network == 'evoenergy':
+        return evoenergy.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
+    elif network == 'sapn':
+        return sapower.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
+    elif network == 'tasnetworks':
+        return tasnetworks.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
+    elif network == 'endeavour':
+        return endeavour.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
+    elif network == 'powercor':
+        return powercor.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
+    elif network == 'essential':
+        return essential.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
+    elif network == 'victoria':
+        return endeavour.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
+    else:
+        raise ValueError(f"Unknown network: {network}")
+
 def get_daily_fee(network, tariff, annual_usage=None):
     """
     Calculate the daily fee for a given network and tariff.
