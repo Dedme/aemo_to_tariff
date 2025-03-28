@@ -25,18 +25,18 @@ class TestTariffConversions(unittest.TestCase):
     def test_evoenergy_tariff_017(self):
         # Off peak
         interval_time = datetime.strptime('2024-07-05 14:00+10:00', '%Y-%m-%d %H:%M%z')
-        self.assertAlmostEqual(spot_to_tariff(interval_time, 'Evoenergy', '017', 100, 1, 1), 11.911, 2)
+        self.assertAlmostEqual(spot_to_tariff(interval_time, 'Evoenergy', 'N17', 100, 1, 1), 11.911, 2)
 
         # Peak
         interval_time = datetime.strptime('2024-07-05 17:00+10:00', '%Y-%m-%d %H:%M%z')
-        self.assertAlmostEqual(spot_to_tariff(interval_time, 'Evoenergy', '017', 100, 1, 1), 24.263, 2)
+        self.assertAlmostEqual(spot_to_tariff(interval_time, 'Evoenergy', 'N17', 100, 1, 1), 24.263, 2)
 
         # Shoulder
         interval_time = datetime.strptime('2024-07-05 02:00+10:00', '%Y-%m-%d %H:%M%z')
-        self.assertAlmostEqual(spot_to_tariff(interval_time, 'Evoenergy', '017', 100, 1, 1), 14.072, 2)
+        self.assertAlmostEqual(spot_to_tariff(interval_time, 'Evoenergy', 'N17', 100, 1, 1), 14.072, 2)
 
         interval_time = datetime.strptime('2024-07-05 14:00+10:00', '%Y-%m-%d %H:%M%z')
-        self.assertAlmostEqual(spot_to_tariff(interval_time, 'Evoenergy', '017', 200), 23.595, 2)
+        self.assertAlmostEqual(spot_to_tariff(interval_time, 'Evoenergy', 'N17', 200), 23.595, 2)
 
     def test_ausgrid_tariff_EA116(self):
         interval_time = datetime.strptime('2024-07-05 14:00+10:00', '%Y-%m-%d %H:%M%z')

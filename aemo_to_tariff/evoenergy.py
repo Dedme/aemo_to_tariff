@@ -8,7 +8,7 @@ def time_zone():
 
 
 tariffs = {
-    '015': {
+    'N15': {
         'name': 'Residential TOU Network (closed)',
         'periods': [
             ('Peak', time(7, 0), time(9, 0), 14.063),
@@ -18,7 +18,7 @@ tariffs = {
             ('Off-peak', time(22, 0), time(7, 0), 3.210)
         ]
     },
-    '016': {
+    'N16': {
         'name': 'Residential TOU Network (closed) XMC',
         'periods': [
             ('Peak', time(7, 0), time(9, 0), 14.063),
@@ -28,7 +28,7 @@ tariffs = {
             ('Off-peak', time(22, 0), time(7, 0), 3.210)
         ]
     },
-    '017': {
+    'N17': {
         'name': 'New Residential TOU Network',
         'periods': [
             ('Peak', time(7, 0), time(9, 0), 14.109),
@@ -39,7 +39,7 @@ tariffs = {
             ('Off-peak', time(15, 0), time(17, 0), 3.918)
         ]
     },
-    '018': {
+    'N18': {
         'name': 'New Residential TOU Network XMC',
         'periods': [
             ('Peak', time(7, 0), time(9, 0), 14.109),
