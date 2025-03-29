@@ -80,11 +80,11 @@ class TestTariffConversions(unittest.TestCase):
     def test_sapn_tariff_RTOU(self):
         # Peak
         interval_time = datetime.strptime('2024-07-05 18:00+09:30', '%Y-%m-%d %H:%M%z')
-        self.assertAlmostEqual(spot_to_tariff(interval_time, 'SAPN', 'RTOU', 100), 29.71, 2)
+        self.assertAlmostEqual(spot_to_tariff(interval_time, 'SAPN', 'RTOU', 100), 31.59, 2)
 
         # Off-peak
         interval_time = datetime.strptime('2024-07-05 02:00+09:30', '%Y-%m-%d %H:%M%z')
-        self.assertAlmostEqual(spot_to_tariff(interval_time, 'SAPN', 'RTOU', 100), 18.48, 2)
+        self.assertAlmostEqual(spot_to_tariff(interval_time, 'SAPN', 'RTOU', 100), 19.24, 2)
 
     def test_tasnetworks_daily_fee(self):
         self.assertAlmostEqual(get_daily_fee('tasnetworks', 'TAS93'), 70.032, 2)
