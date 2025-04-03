@@ -39,7 +39,7 @@ tariffs = {
         'periods': [
             ('Peak', time(14, 0), time(20, 0), 20.669),
             ('Peak', time(6, 0), time(10, 0), 20.669),
-            ('Off-peak', time(20, 0), time(14, 0), 8.316),
+            ('Off-peak', time(20, 0), time(6, 0), 8.316),
             ('Solar Sponge', time(10, 0), time(15, 0), 4.191)
         ]
     },
