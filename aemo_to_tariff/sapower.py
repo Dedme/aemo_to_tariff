@@ -12,7 +12,7 @@ feed_in_tariffs = {
         'periods': [
             ('Peak', time(14, 0), time(20, 0), 12.36),
             ('Peak', time(6, 0), time(10, 0), 12.36),
-            ('Off-peak', time(20, 0), time(14, 0), 0),
+            ('Off-peak', time(20, 0), time(6, 0), 0),
             ('Solar Sponge', time(10, 0), time(15, 0), -1)
         ]
     }
@@ -30,7 +30,7 @@ tariffs = {
         'periods': [
             ('Peak', time(14, 0), time(20, 0), 20.669),
             ('Peak', time(6, 0), time(10, 0), 20.669),
-            ('Off-peak', time(20, 0), time(14, 0), 8.316),
+            ('Off-peak', time(20, 0), time(6, 0), 8.316),
             ('Solar Sponge', time(10, 0), time(15, 0), 4.191)
         ]
     },
@@ -48,7 +48,7 @@ tariffs = {
         'periods': [
             ('Peak', time(14, 0), time(20, 0), 33.09),
             ('Peak', time(6, 0), time(10, 0), 20.669),
-            ('Off-peak', time(20, 0), time(14, 0), 9.78),
+            ('Off-peak', time(20, 0), time(6, 0), 9.78),
             ('Solar Sponge', time(10, 0), time(15, 0), 3.01)
         ]
     },
@@ -57,7 +57,7 @@ tariffs = {
         'periods': [
             ('Peak', time(14, 0), time(20, 0), 33.09),
             ('Peak', time(6, 0), time(10, 0), 33.09),
-            ('Off-peak', time(20, 0), time(14, 0), 9.78),
+            ('Off-peak', time(20, 0), time(6, 0), 9.78),
             ('Solar Sponge', time(10, 0), time(15, 0), 3.01)
         ]
     },
