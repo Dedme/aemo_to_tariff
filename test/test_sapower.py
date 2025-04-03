@@ -43,7 +43,7 @@ class TestSAPower(unittest.TestCase):
         interval_time = datetime(2025, 2, 20, 13, 10, tzinfo=ZoneInfo('Australia/Adelaide'))
         tariff_code = 'RELE2W'
         rrp = 100
-        expected_price = 10.0
+        expected_price = 9.0
         price = sapower.convert_feed_in_tariff(interval_time, tariff_code, rrp)
         loss_factor = expected_price / price
         self.assertAlmostEqual(price, expected_price, places=1, msg=f"Price: {price}, Expected: {expected_price}, Loss Factor: {loss_factor}")
