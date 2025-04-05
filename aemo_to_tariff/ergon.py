@@ -5,80 +5,28 @@ def time_zone():
     return 'Australia/Brisbane'
 
 daily_fees = {
-    'ERDEMT1': 1.208,
-    'ERDEMT2': 1.208,
-    'ERDEMT3': 1.208,
-    'EBDEMT1': 1.260,
-    'EBDEMT2': 1.260,
-    'EBDEMT3': 1.260,
+    'WRTDEMT1': 1.746,
+    'ERTOUET1': 1.798,
 }
 
 demand_charges = {
-    'ERDEMT1': 0.24757,
-    'ERDEMT2': 0.2576,
-    'ERDEMT3': 0.2525,
-    'EBDEMT1': 0.2402,
-    'EBDEMT2': 0.24857,
-    'EBDEMT3': 0.2536,
+    'WRTDEMT1': 22.388,
 }
 
 tariffs = {
-    'ERDEMT1': {
-        'name': 'Residential Demand',
-        'periods': [('Anytime', time(0, 0), time(23, 59), 4.262)],
-        'rate': 4.262
+    'WRTDEMT1': {
+        'name': 'Residential Transitional Demand WRTDEMT1',
+        'periods': [('Anytime', time(0, 0), time(23, 59), 26.793)],
+        'rate': 26.793
     },
-    'ERDEMT2': {
-        'name': 'Residential Demand',
-        'periods': [('Anytime', time(0, 0), time(23, 59), 4.091)],
-        'rate': 4.091
-    },
-    'ERDEMT3': {
-        'name': 'Residential Demand',
-        'periods': [('Anytime', time(0, 0), time(23, 59), 4.21)],
-        'rate': 4.21
-    },
-    'EBDEMT1': {
-        'name': 'Small Business Demand',
-        'periods': [('Anytime', time(0, 0), time(23, 59), 0.0)],
-        'rate': 0.0
-    },
-    'EBDEMT2': {
-        'name': 'Small Business Demand',
-        'periods': [('Anytime', time(0, 0), time(23, 59), 0.0)],
-        'rate': 0.0
-    },
-    'EBDEMT3': {
-        'name': 'Small Business Demand',
-        'periods': [('Anytime', time(0, 0), time(23, 59), 0.0)],
-        'rate': 0.0
-    },
-    'ELFLEXT1': {
-        'name': 'Dynamic Flex TOU',
+    'ERTOUET1': {
+        'name': 'Residential ToU Energy',
         'periods': [
-            ('Peak', time(17, 0), time(21, 0), 2.04),
-            ('Shoulder', time(7, 0), time(17, 0), 2.04),
-            ('Off-Peak', time(21, 0), time(7, 0), 2.04)
+            ('Peak', time(17, 0), time(21, 0), 59.684),
+            ('Shoulder', time(7, 0), time(17, 0), 24.912),
+            ('Off-Peak', time(21, 0), time(7, 0), 7.161)
         ],
-        'rate': {'Peak': 2.04, 'Shoulder': 2.04, 'Off-Peak': 2.04}
-    },
-    'ECFLEXT1': {
-        'name': 'Dynamic Flex TOU',
-        'periods': [
-            ('Peak', time(17, 0), time(21, 0), 1.227),
-            ('Shoulder', time(7, 0), time(17, 0), 1.227),
-            ('Off-Peak', time(21, 0), time(7, 0), 1.227)
-        ],
-        'rate': {'Peak': 1.227, 'Shoulder': 1.227, 'Off-Peak': 1.227}
-    },
-    'ECPRCET1': {
-        'name': 'Dynamic Flex TOU',
-        'periods': [
-            ('Peak', time(17, 0), time(21, 0), 1.227),
-            ('Shoulder', time(7, 0), time(17, 0), 1.227),
-            ('Off-Peak', time(21, 0), time(7, 0), 1.227)
-        ],
-        'rate': {'Peak': 1.227, 'Shoulder': 1.227, 'Off-Peak': 1.227}
+        'rate': {'Peak': 59.684, 'Shoulder': 24.912, 'Off-Peak': 7.161}
     }
 }
 
