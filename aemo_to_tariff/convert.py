@@ -1,6 +1,7 @@
 # aemo_to_tariff/convert.py
 
 import aemo_to_tariff.energex as energex
+import aemo_to_tariff.ergon as ergon
 import aemo_to_tariff.ausgrid as ausgrid
 import aemo_to_tariff.evoenergy as evoenergy
 import aemo_to_tariff.sapower as sapower
@@ -32,6 +33,8 @@ def spot_to_tariff(interval_time, network, tariff, rrp,
 
     if network == 'energex':
         return energex.convert(interval_time, tariff, adjusted_rrp)
+    elif network == 'ergon':
+        return ergon.convert(interval_time, tariff, adjusted_rrp)
     elif network == 'ausgrid':
         return ausgrid.convert(interval_time, tariff, adjusted_rrp)
     elif network == 'evoenergy':
@@ -73,6 +76,8 @@ def spot_to_feed_in_tariff(interval_time, network, tariff, rrp,
 
     if network == 'energex':
         return energex.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
+    elif network == 'ergon':
+        return ergon.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
     elif network == 'ausgrid':
         return ausgrid.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
     elif network == 'evoenergy':
@@ -108,6 +113,8 @@ def get_daily_fee(network, tariff, annual_usage=None):
 
     if network == 'energex':
         return energex.get_daily_fee(tariff, annual_usage)
+    elif network == 'ergon':
+        return ergon.get_daily_fee(tariff, annual_usage)
     elif network == 'ausgrid':
         # Placeholder for Ausgrid daily fee calculation
         return 0.0
@@ -144,6 +151,8 @@ def calculate_demand_fee(network, tariff, demand_kw, days=30):
 
     if network == 'energex':
         return energex.calculate_demand_fee(tariff, demand_kw, days)
+    elif network == 'ergon':
+        return ergon.calculate_demand_fee(tariff, demand_kw, days)
     elif network == 'ausgrid':
         # Placeholder for Ausgrid demand fee calculation
         return 0.0
@@ -180,6 +189,8 @@ def get_periods(network, tariff: str):
     if network == 'energex':
         return energex.get_periods(tariff)
     elif network == 'ausgrid':
+        return ergon.get_periods(tariff)
+    elif network == 'ergon':
         return ausgrid.get_periods(tariff)
     elif network == 'evoenergy':
         return evoenergy.get_periods(tariff)
