@@ -52,7 +52,12 @@ def spot_to_tariff(interval_time, network, tariff, rrp,
     elif network == 'victoria':
         return endeavour.convert(interval_time, tariff, adjusted_rrp)
     else:
-        raise ValueError(f"Unknown network: {network}")
+        slope = 1.05
+        intercept = 7.5
+        # This is a terrible approximation
+        # for unknown networks, but it should be close enough
+        # for most cases.
+        return adjusted_rrp * slope + intercept
 
 def spot_to_feed_in_tariff(interval_time, network, tariff, rrp,
                            dlf=1.05905, mlf=1.0154, market=1.0154):
@@ -95,7 +100,7 @@ def spot_to_feed_in_tariff(interval_time, network, tariff, rrp,
     elif network == 'victoria':
         return endeavour.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
     else:
-        raise ValueError(f"Unknown network: {network}")
+        return adjusted_rrp / 10
 
 def get_daily_fee(network, tariff, annual_usage=None):
     """
@@ -132,7 +137,7 @@ def get_daily_fee(network, tariff, annual_usage=None):
     elif network == 'powercor':
         return powercor.get_daily_fee(tariff)
     else:
-        raise ValueError(f"Unknown network: {network}")
+        return 1
 
 def calculate_demand_fee(network, tariff, demand_kw, days=30):
     """
@@ -170,7 +175,7 @@ def calculate_demand_fee(network, tariff, demand_kw, days=30):
     elif network == 'essential':
         return essential.calculate_demand_fee(tariff, demand_kw, days)
     else:
-        raise ValueError(f"Unknown network: {network}")
+        return 0.0
 
 
 def get_periods(network, tariff: str):
@@ -207,4 +212,4 @@ def get_periods(network, tariff: str):
     elif network == 'powercor':
         return powercor.get_periods(tariff)
     else:
-        raise ValueError(f"Unknown network: {network}")
+        return energex.get_periods(tariff)

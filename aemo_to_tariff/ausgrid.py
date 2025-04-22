@@ -1,10 +1,8 @@
-# aemo_to_tariff/ausgrid.py
 from datetime import time, datetime
 from zoneinfo import ZoneInfo
 
 def time_zone():
     return 'Australia/Sydney'
-
 
 tariffs = {
     'EA010': {
@@ -16,9 +14,10 @@ tariffs = {
     'EA025': {
         'name': 'Residential ToU',
         'periods': [
-            ('Peak', time(14, 0), time(20, 0), 26.8969),
-            ('Off-peak', time(20, 0), time(14, 0), 4.6503)
-        ]
+            ('Peak', time(15, 0), time(21, 0), 26.8969),
+            ('Off-peak', time(21, 0), time(15, 0), 4.6503)
+        ],
+        'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     },
     'EA111': {
         'name': 'Residential demand (introductory)',
@@ -35,60 +34,49 @@ tariffs = {
     'EA225': {
         'name': 'Small Business ToU',
         'periods': [
-            ('Peak', time(14, 0), time(20, 0), 33.0130),
-            ('Off-peak', time(20, 0), time(14, 0), 5.2507)
-        ]
+            ('Peak', time(15, 0), time(21, 0), 33.0130),
+            ('Off-peak', time(21, 0), time(15, 0), 5.2507)
+        ],
+        'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     }
 }
-
 
 def get_periods(tariff_code: str):
     tariff = tariffs.get(tariff_code)
     if not tariff:
         raise ValueError(f"Unknown tariff code: {tariff_code}")
-
     return tariff['periods']
 
 def convert_feed_in_tariff(interval_datetime: datetime, tariff_code: str, rrp: float):
-    """
-    Convert RRP from $/MWh to c/kWh for SA Power Networks.
-
-    Parameters:
-    - interval_datetime (datetime): The interval datetime.
-    - tariff_code (str): The tariff code.
-    - rrp (float): The Regional Reference Price in $/MWh.
-
-    Returns:
-    - float: The price in c/kWh.
-    """
     rrp_c_kwh = rrp / 10
-    
     return rrp_c_kwh
 
 def convert(interval_datetime: datetime, tariff_code: str, rrp: float):
-    """
-    Convert RRP from $/MWh to c/kWh for Ausgrid.
-
-    Parameters:
-    - interval_time (str): The interval time.
-    - network (str): The name of the network.
-    - tariff (str): The tariff code.
-    - rrp (float): The Regional Reference Price in $/MWh.
-
-    Returns:
-    - float: The price in c/kWh.
-    """
     interval_time = interval_datetime.astimezone(ZoneInfo(time_zone())).time()
     rrp_c_kwh = rrp / 10
-    tariff = tariffs[tariff_code]
+    tariff = tariffs.get(tariff_code)
 
-    # Find the applicable period and rate
-    for period, start, end, rate in tariff['periods']:
-        if start <= interval_time < end or (start > end and (interval_time >= start or interval_time < end)):
-            total_price = rrp_c_kwh + rate
-            return total_price
+    if not tariff:
+        raise ValueError(f"Unknown tariff code: {tariff_code}")
 
-    # Otherwise, this terrible approximation
+    current_month = interval_datetime.month
+
+    # Determine if current month is within peak months
+    is_peak_month = 'peak_months' in tariff and current_month in tariff['peak_months']
+
+    for period_name, start, end, rate in tariff['periods']:
+        if period_name == 'Peak' and not is_peak_month:
+            continue  # Skip peak period if not in peak months
+
+        if start <= end:
+            if start <= interval_time < end:
+                return rrp_c_kwh + rate
+        else:
+            # Over midnight
+            if interval_time >= start or interval_time < end:
+                return rrp_c_kwh + rate
+
+    # If no period matches, apply default approximation
     slope = 1.037869032618134
-    intecept = 5.586606750833143
-    return rrp_c_kwh * slope + intecept
+    intercept = 5.586606750833143
+    return rrp_c_kwh * slope + intercept
