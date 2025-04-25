@@ -21,3 +21,13 @@ class TestEvoenergy(unittest.TestCase):
         price = evoenergy.convert(interval_time, tariff_code, rrp)
         loss_factor = expected_price / price
         self.assertAlmostEqual(price * 0.96, expected_price, places=1)
+
+    def test_peak_evoenergy_april(self):
+        interval_time = datetime(2025, 4, 28, 17, 55, tzinfo=ZoneInfo('Australia/Sydney'))
+        tariff_code = 'N17'
+        rrp = 110.4
+        expected_price = 14.15
+        price = evoenergy.convert(interval_time, tariff_code, rrp)
+        loss_factor = expected_price / price
+        print(f"Loss factor: {loss_factor}")
+        self.assertAlmostEqual(price * 0.83, expected_price, places=1)

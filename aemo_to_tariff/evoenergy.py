@@ -16,7 +16,8 @@ tariffs = {
             ('Shoulder', time(9, 0), time(17, 0), 6.285),
             ('Shoulder', time(20, 0), time(22, 0), 6.285),
             ('Off-peak', time(22, 0), time(7, 0), 3.210)
-        ]
+        ],
+        'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     },
     'N16': {
         'name': 'Residential TOU Network (closed) XMC',
@@ -26,7 +27,8 @@ tariffs = {
             ('Shoulder', time(9, 0), time(17, 0), 6.285),
             ('Shoulder', time(20, 0), time(22, 0), 6.285),
             ('Off-peak', time(22, 0), time(7, 0), 3.210)
-        ]
+        ],
+        'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     },
     'N17': {
         'name': 'New Residential TOU Network',
@@ -37,7 +39,8 @@ tariffs = {
             ('Off-peak', time(21, 0), time(7, 0), 3.918),
             ('Off-peak', time(9, 0), time(11, 0), 3.918),
             ('Off-peak', time(15, 0), time(17, 0), 3.918)
-        ]
+        ],
+        'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     },
     'N18': {
         'name': 'New Residential TOU Network XMC',
@@ -48,7 +51,8 @@ tariffs = {
             ('Off-peak', time(21, 0), time(7, 0), 3.918),
             ('Off-peak', time(9, 0), time(11, 0), 3.918),
             ('Off-peak', time(15, 0), time(17, 0), 3.918)
-        ]
+        ],
+        'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     }
 }
 
@@ -89,12 +93,18 @@ def convert(interval_datetime: datetime, tariff_code: str, rrp: float):
     - float: The price in c/kWh.
     """
     interval_time = interval_datetime.astimezone(ZoneInfo(time_zone())).time()
+    current_month = interval_datetime.month
 
     rrp_c_kwh = rrp / 10
     tariff = tariffs[tariff_code]
+    
+    is_peak_month = 'peak_months' in tariff and current_month in tariff['peak_months']
 
     # Find the applicable period and rate
-    for period, start, end, rate in tariff['periods']:
+    for period_name, start, end, rate in tariff['periods']:
+        if period_name == 'Peak' and not is_peak_month:
+            continue  # Skip peak period if not in peak months
+
         if start <= interval_time < end:
             total_price = rrp_c_kwh + rate
             return total_price
