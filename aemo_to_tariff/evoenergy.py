@@ -8,7 +8,7 @@ def time_zone():
 
 
 tariffs = {
-    'N15': {
+    '015': {
         'name': 'Residential TOU Network (closed)',
         'periods': [
             ('Peak', time(7, 0), time(9, 0), 14.063),
@@ -19,7 +19,7 @@ tariffs = {
         ],
         'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     },
-    'N16': {
+    '016': {
         'name': 'Residential TOU Network (closed) XMC',
         'periods': [
             ('Peak', time(7, 0), time(9, 0), 14.063),
@@ -30,7 +30,7 @@ tariffs = {
         ],
         'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     },
-    'N17': {
+    '017': {
         'name': 'New Residential TOU Network',
         'periods': [
             ('Peak', time(7, 0), time(9, 0), 14.109),
@@ -42,7 +42,7 @@ tariffs = {
         ],
         'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     },
-    'N18': {
+    '018': {
         'name': 'New Residential TOU Network XMC',
         'periods': [
             ('Peak', time(7, 0), time(9, 0), 14.109),
@@ -97,7 +97,7 @@ def convert(interval_datetime: datetime, tariff_code: str, rrp: float):
 
     rrp_c_kwh = rrp / 10
     tariff = tariffs[tariff_code]
-    
+    gst = 1.1
     is_peak_month = 'peak_months' in tariff and current_month in tariff['peak_months']
 
     # Find the applicable period and rate
@@ -106,12 +106,12 @@ def convert(interval_datetime: datetime, tariff_code: str, rrp: float):
             continue  # Skip peak period if not in peak months
 
         if start <= interval_time < end:
-            total_price = rrp_c_kwh + rate
+            total_price = rrp_c_kwh + (rate * gst)
             return total_price
 
         # Handle overnight periods (e.g., 22:00 to 07:00)
         if start > end and (interval_time >= start or interval_time < end):
-            total_price = rrp_c_kwh + rate
+            total_price = rrp_c_kwh + (rate * gst)
             return total_price
 
     # Otherwise, this terrible approximation
