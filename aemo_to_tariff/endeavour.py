@@ -5,50 +5,76 @@ from zoneinfo import ZoneInfo
 def time_zone():
     return 'Australia/Sydney'
 
+def battery_tariff(customer_type: str):
+    """
+    Get the battery tariff for a given customer type.
+
+    Parameters:
+    - customer_type (str): The customer type ('Residential' or 'Business').
+
+    Returns:
+    - str: The battery tariff code.
+    """
+    if customer_type == 'Residential':
+        return 'N71'
+    elif customer_type == 'Business':
+        return 'N91'
+    else:
+        raise ValueError("Invalid customer type. Must be 'Residential' or 'Business'.")
+
 
 tariffs = {
     'N70': {
         'name': 'Residential Flat',
         'periods': [
-            ('Anytime', time(0, 0), time(23, 59), 8.4180)
+            ('Anytime', time(0, 0), time(23, 59), 10.96)
         ]
     },
     'N71': {
         'name': 'Residential Seasonal TOU',
         'periods': [
-            ('High-season Peak', time(16, 0), time(20, 0), 20.0116),
-            ('Low-season Peak', time(16, 0), time(20, 0), 10.8094),
-            ('Off Peak', time(0, 0), time(16, 0), 6.8217),
-            ('Off Peak', time(20, 0), time(23, 59), 6.8217)
-        ]
+            ('High-season Peak', time(16, 0), time(20, 0), 20.7634),
+            ('Low-season Peak', time(16, 0), time(20, 0),  12.9972),
+            ('Solar Soak', time(10, 0), time(14, 0), 2.9642),
+            ('Off Peak', time(0, 0), time(10, 0), 9.7277),
+            ('Off Peak', time(14, 0), time(16, 0), 9.7277),
+            ('Off Peak', time(20, 0), time(23, 59), 9.7277)
+        ],
+        'fixed_daily_charge': 55.5325,
+        'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     },
     'N90': {
         'name': 'General Supply Block',
         'periods': [
-            ('Block 1', time(0, 0), time(23, 59), 8.8705),
-            ('Block 2', time(0, 0), time(23, 59), 10.3335)
+            ('Block 1', time(0, 0), time(23, 59), 11.46),
+            ('Block 2', time(0, 0), time(23, 59), 13.39)
         ]
     },
     'N91': {
         'name': 'GS Seasonal TOU',
         'periods': [
-            ('High-season Peak', time(16, 0), time(20, 0), 20.7287),
-            ('Low-season Peak', time(16, 0), time(20, 0), 11.5265),
-            ('Off Peak', time(0, 0), time(16, 0), 7.5388),
-            ('Off Peak', time(20, 0), time(23, 59), 7.5388)
-        ]
+            ('High-season Peak', time(16, 0), time(20, 0), 22.2811),
+            ('Low-season Peak', time(16, 0), time(20, 0), 14.5149),
+            ('Solar Soak', time(10, 0), time(14, 0), 3.6436),
+            ('Off Peak', time(0, 0), time(10, 0), 11.2454),
+            ('Off Peak', time(14, 0), time(16, 0), 11.2454),
+            ('Off Peak', time(20, 0), time(23, 59), 11.2454)
+        ],
+        'fixed_daily_charge': 78.0125,
+        'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     },
     'N19': {
         'name': 'LV Seasonal STOU Demand',
         'periods': [
-            ('High-season Peak', time(16, 0), time(20, 0), 4.2883),
-            ('Low-season Peak', time(16, 0), time(20, 0), 3.6717),
-            ('Off Peak', time(0, 0), time(16, 0), 2.1951),
-            ('Off Peak', time(20, 0), time(23, 59), 2.1951)
-        ]
+            ('High-season Peak', time(16, 0), time(20, 0), 5.20),
+            ('Low-season Peak', time(16, 0), time(20, 0), 4.65),
+            ('Off Peak', time(0, 0), time(10, 0), 3.40),
+            ('Off Peak', time(14, 0), time(16, 0), 3.40),
+            ('Off Peak', time(20, 0), time(23, 59), 3.40)
+        ],
+        'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     }
 }
-
 
 def calculate_daily_fee(tariff_code: str):
     """

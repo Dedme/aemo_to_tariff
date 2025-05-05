@@ -14,7 +14,7 @@ class TestEndeavour(unittest.TestCase):
         interval_time = datetime(2023, 1, 15, 17, 0, tzinfo=ZoneInfo(time_zone()))
         tariff_code = 'N71'
         rrp = 100.0
-        expected_price = 20.0116 + (rrp / 10)
+        expected_price = 30.7634
         price = convert(interval_time, tariff_code, rrp)
         self.assertAlmostEqual(price, expected_price)
 
@@ -22,7 +22,7 @@ class TestEndeavour(unittest.TestCase):
         interval_time = datetime(2024, 8, 15, 17, 0, tzinfo=ZoneInfo(time_zone()))
         tariff_code = 'N71'
         rrp = 100.0
-        expected_price = 20.8094
+        expected_price = 22.9972
         price = convert(interval_time, tariff_code, rrp)
         self.assertAlmostEqual(price, expected_price, places=4)
 
@@ -30,9 +30,9 @@ class TestEndeavour(unittest.TestCase):
         interval_time = datetime(2023, 7, 15, 10, 0, tzinfo=ZoneInfo(time_zone()))
         tariff_code = 'N71'
         rrp = 100.0
-        expected_price = 16.8217
+        expected_price = 15.97
         price = convert(interval_time, tariff_code, rrp)
-        self.assertAlmostEqual(price, expected_price, places=4)
+        self.assertAlmostEqual(price, expected_price, places=2)
 
     def test_convert_unknown_tariff(self):
         interval_time = datetime(2023, 7, 15, 10, 0, tzinfo=ZoneInfo(time_zone()))

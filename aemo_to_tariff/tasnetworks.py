@@ -5,6 +5,23 @@ from zoneinfo import ZoneInfo
 def time_zone():
     return 'Australia/Hobart'
 
+def battery_tariff(customer_type: str):
+    """
+    Get the battery tariff for a given customer type.
+
+    Parameters:
+    - customer_type (str): The customer type ('Residential' or 'Business').
+
+    Returns:
+    - str: The battery tariff code.
+    """
+    if customer_type == 'Residential':
+        return 'TAS93'
+    elif customer_type == 'Business':
+        return 'TAS94'
+    else:
+        raise ValueError("Invalid customer type. Must be 'Residential' or 'Business'.")
+
 tariffs = {
     'TAS93': {
         'name': 'Residential time of use consumption',

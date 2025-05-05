@@ -6,6 +6,22 @@ from datetime import time
 def time_zone():
     return 'Australia/ACT'
 
+def battery_tariff(customer_type: str):
+    """
+    Get the battery tariff for a given customer type.
+
+    Parameters:
+    - customer_type (str): The customer type ('Residential' or 'Business').
+
+    Returns:
+    - str: The battery tariff code.
+    """
+    if customer_type == 'Residential':
+        return '017'
+    elif customer_type == 'Business':
+        return '090'
+    else:
+        raise ValueError("Invalid customer type. Must be 'Residential' or 'Business'.")
 
 tariffs = {
     '015': {
@@ -40,6 +56,7 @@ tariffs = {
             ('Off-peak', time(9, 0), time(11, 0), 3.918),
             ('Off-peak', time(15, 0), time(17, 0), 3.918)
         ],
+        'fixed_daily_charge': 32.757,  # Fixed daily charge in c/day
         'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     },
     '018': {
@@ -52,7 +69,17 @@ tariffs = {
             ('Off-peak', time(9, 0), time(11, 0), 3.918),
             ('Off-peak', time(15, 0), time(17, 0), 3.918)
         ],
+        'fixed_daily_charge': 48.257,  # Fixed daily charge in c/day
         'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
+    },
+    '090': {
+        'name': 'Component Charge Applicability',
+        'periods': [
+            ('Peak', time(7, 0), time(17, 0), 17.518),  # 7am-5pm weekdays
+            ('Shoulder', time(17, 0), time(22, 0), 10.990),  # 5pm-10pm weekdays
+            ('Off-peak', time(22, 0), time(7, 0), 5.110),  # All other times
+        ],
+        'fixed_daily_charge': 76.676  # Fixed daily charge in c/day
     }
 }
 
