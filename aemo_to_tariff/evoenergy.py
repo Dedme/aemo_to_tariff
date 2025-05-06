@@ -125,7 +125,7 @@ def convert(interval_datetime: datetime, tariff_code: str, rrp: float):
     rrp_c_kwh = rrp / 10
     tariff = tariffs[tariff_code]
     gst = 1.1
-    is_peak_month = 'peak_months' in tariff and current_month in tariff['peak_months']
+    is_peak_month = current_month in tariff.get('peak_months', [])
 
     # Find the applicable period and rate
     for period_name, start, end, rate in tariff['periods']:

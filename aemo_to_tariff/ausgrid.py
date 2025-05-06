@@ -79,7 +79,7 @@ def convert(interval_datetime: datetime, tariff_code: str, rrp: float):
     current_month = interval_datetime.month
 
     # Determine if current month is within peak months
-    is_peak_month = 'peak_months' in tariff and current_month in tariff['peak_months']
+    is_peak_month = current_month in tariff.get('peak_months', [])
 
     for period_name, start, end, rate in tariff['periods']:
         if period_name == 'Peak' and not is_peak_month:

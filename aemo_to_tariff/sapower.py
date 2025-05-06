@@ -27,12 +27,13 @@ feed_in_tariffs = {
     'RELE2W': {
         'name': 'Residential Electrify',
         'periods': [
-            ('Peak', time(15, 0), time(20, 0), 12.36),
-            ('Peak', time(6, 0), time(10, 0), 12.36),
+            ('Peak', time(17, 0), time(21, 0), 12.36),
             ('Off-peak', time(20, 0), time(6, 0), 0),
             ('Solar Sponge', time(10, 0), time(15, 0), -1)
-        ]
+        ],
+        'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     }
+
 }
 
 tariffs = {
@@ -130,12 +131,18 @@ def convert_feed_in_tariff(interval_datetime: datetime, tariff_code: str, rrp: f
     """
     interval_time = interval_datetime.astimezone(ZoneInfo(time_zone())).time()
     rrp_c_kwh = rrp / 10
-    
+
     feed_in_tariff = feed_in_tariffs.get(tariff_code)
     if not feed_in_tariff:
         return rrp_c_kwh
-    
-    for period, start, end, rate in feed_in_tariff['periods']:
+
+    current_month = interval_datetime.month
+    is_peak_month = current_month in feed_in_tariff.get('peak_months', [])
+
+    for period_name, start, end, rate in feed_in_tariff['periods']:
+        if period_name == 'Peak' and not is_peak_month:
+            continue  # Skip peak period if not in peak months
+
         if start <= interval_time < end or (start > end and (interval_time >= start or interval_time < end)):
             total_price = rrp_c_kwh + rate
             return total_price
