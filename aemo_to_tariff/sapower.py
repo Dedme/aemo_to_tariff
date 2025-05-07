@@ -73,8 +73,7 @@ tariffs = {
     'RELE2W': {
         'name': 'Residential Electrify',
         'periods': [
-            ('Peak', time(15, 0), time(20, 0), 33.09),
-            ('Peak', time(6, 0), time(10, 0), 33.09),
+            ('Peak', time(17, 0), time(21, 0), 33.09),
             ('Off-peak', time(20, 0), time(6, 0), 9.78),
             ('Solar Sponge', time(10, 0), time(15, 0), 3.01)
         ]
