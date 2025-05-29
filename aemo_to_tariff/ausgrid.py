@@ -55,7 +55,38 @@ tariffs = {
             ('Off-peak', time(21, 0), time(15, 0), 5.2507)
         ],
         'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
+    },
+    'EA305': {
+        'name': 'Small Business LV',
+        'periods': [
+            ('Peak', time(15, 0), time(22, 59), 6.8777),
+            ('Off-Peak', time(21, 0), time(14, 59), 1.5231)
+        ]
     }
+}
+
+demand_tariffs = {
+    'EA116': {
+        'name': 'Residential Demand',
+        'periods': [
+            ('Peak', time(15, 0), time(22, 59), 33.2942),  # ¢/kW/day
+        ]
+    },
+    'EA305': {
+        'name': 'Small Business LV Demand',
+        'periods': [
+            ('Peak', time(15, 0), time(22, 59), 49.4399),  # ¢/kW/day
+        ]
+    }
+}
+
+daily_fixed_charges = {
+    'EA010': 47,
+    'EA025': 57,
+    'EA111': 51,
+    'EA116': 60,
+    'EA225': 184,
+    'EA305': 2047.0434
 }
 
 def get_periods(tariff_code: str):
@@ -97,3 +128,42 @@ def convert(interval_datetime: datetime, tariff_code: str, rrp: float):
     slope = 1.037869032618134
     intercept = 5.586606750833143
     return rrp_c_kwh * slope + intercept
+
+def calculate_demand_fee(tariff_code: str, demand_kw: float, days: int = 30):
+    """
+    Calculate the demand fee for a given tariff code, demand amount, and time period.
+
+    Parameters:
+    - tariff_code (str): The tariff code.
+    - demand_kw (float): The maximum demand in kW (or kVA for 8100 and 8300 tariffs).
+    - days (int): The number of days for the billing period (default is 30).
+
+    Returns:
+    - float: The demand fee in dollars.
+    """
+    tariff = demand_tariffs.get(tariff_code)
+    if not tariff:
+        raise ValueError(f"Unknown tariff code: {tariff_code}")
+
+    fee = 0.0
+    for period_name, start, end, rate in tariff['periods']:
+        if period_name == 'Peak':
+            fee += rate * demand_kw * days / 100  # Convert ¢/kW/day to $/kW/day
+
+    return fee
+
+def get_daily_fee(tariff_code: str, annual_usage: float = None):
+    """
+    Calculate the daily fee for a given tariff code.
+
+    Parameters:
+    - tariff_code (str): The tariff code.
+    - annual_usage (float): Annual usage in kWh, required for Wide IFT and ToU Energy tariffs.
+
+    Returns:
+    - float: The daily fee in dollars.
+    """
+    fee = daily_fixed_charges.get(tariff_code)
+    if fee is None:
+        raise ValueError(f"Unknown tariff code: {tariff_code}")
+    return fee / 100  # Convert ¢ to $ for daily fixed charge

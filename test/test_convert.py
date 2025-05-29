@@ -55,11 +55,11 @@ class TestTariffConversions(unittest.TestCase):
 
     def test_ausgrid_daily_fee(self):
         # Placeholder test - update when Ausgrid is implemented
-        self.assertEqual(get_daily_fee('Ausgrid', 'EA116'), 0.0)
+        self.assertEqual(get_daily_fee('Ausgrid', 'EA116'), 0.6)
 
     def test_ausgrid_demand_fee(self):
         # Placeholder test - update when Ausgrid is implemented
-        self.assertEqual(calculate_demand_fee('Ausgrid', 'EA116', 5.5, 31), 0.0)
+        self.assertAlmostEqual(calculate_demand_fee('Ausgrid', 'EA116', 5.5, 31), 56.76, 1)
 
     def test_evoenergy_daily_fee(self):
         # Placeholder test - update when Evoenergy is implemented
