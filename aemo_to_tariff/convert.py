@@ -10,6 +10,7 @@ import aemo_to_tariff.endeavour as endeavour
 import aemo_to_tariff.powercor as powercor
 import aemo_to_tariff.essential as essential
 import aemo_to_tariff.victoria as victoria
+import aemo_to_tariff.ausnet as ausnet
 
 def spot_to_tariff(interval_time, network, tariff, rrp,
                    dlf=1.05905, mlf=1.0154, market=1.0154):
@@ -50,7 +51,9 @@ def spot_to_tariff(interval_time, network, tariff, rrp,
     elif network == 'essential':
         return essential.convert(interval_time, tariff, adjusted_rrp)
     elif network == 'victoria':
-        return endeavour.convert(interval_time, tariff, adjusted_rrp)
+        return victoria.convert(interval_time, tariff, adjusted_rrp)
+    elif network == 'ausnet':
+        return ausnet.convert(interval_time, tariff, adjusted_rrp)
     else:
         slope = 1.05
         intercept = 7.5
@@ -93,12 +96,16 @@ def spot_to_feed_in_tariff(interval_time, network, tariff, rrp,
         return tasnetworks.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
     elif network == 'endeavour':
         return endeavour.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
+    elif network == 'evoenergy':
+        return evoenergy.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
     elif network == 'powercor':
         return powercor.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
     elif network == 'essential':
         return essential.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
     elif network == 'victoria':
-        return endeavour.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
+        return victoria.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
+    elif network == 'ausnet':
+        return ausnet.convert_feed_in_tariff(interval_time, tariff, adjusted_rrp)
     else:
         return adjusted_rrp / 10
 
@@ -135,6 +142,10 @@ def get_daily_fee(network, tariff, annual_usage=None):
         return essential.get_daily_fee(tariff)
     elif network == 'powercor':
         return powercor.get_daily_fee(tariff)
+    elif network == 'endeavour':
+        return endeavour.get_daily_fee(tariff)
+    elif network == 'ausnet':
+        return ausnet.get_daily_fee(tariff, annual_usage)
     else:
         return 1
 
@@ -170,6 +181,8 @@ def calculate_demand_fee(network, tariff, demand_kw, days=30):
         return endeavour.calculate_demand_fee(tariff, demand_kw, days)
     elif network == 'victoria':
         return victoria.calculate_demand_fee(tariff, demand_kw, days)
+    elif network == 'ausnet':
+        return ausnet.calculate_demand_fee(tariff, demand_kw, days)
     elif network == 'essential':
         return essential.calculate_demand_fee(tariff, demand_kw, days)
     else:
@@ -209,5 +222,7 @@ def get_periods(network, tariff: str):
         return victoria.get_periods(tariff)
     elif network == 'powercor':
         return powercor.get_periods(tariff)
+    elif network == 'ausnet':
+        return ausnet.get_periods(tariff)
     else:
         return energex.get_periods(tariff)

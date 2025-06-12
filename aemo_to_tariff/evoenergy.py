@@ -20,6 +20,8 @@ def battery_tariff(customer_type: str):
         return '017'
     elif customer_type == 'Business':
         return '090'
+    elif customer_type == 'BatteryTrial':
+        return '026'
     else:
         raise ValueError("Invalid customer type. Must be 'Residential' or 'Business'.")
 
@@ -72,6 +74,19 @@ tariffs = {
         'fixed_daily_charge': 48.257,  # Fixed daily charge in c/day
         'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     },
+    '026': {
+        'name': 'Residential Demand',
+        'periods': [
+            ('Peak', time(7, 0), time(9, 0), 14.109),
+            ('Peak', time(17, 0), time(21, 0), 14.109),
+            ('Solar Soak', time(11, 0), time(15, 0), 1.757),
+            ('Off-peak', time(21, 0), time(7, 0), 3.918),
+            ('Off-peak', time(9, 0), time(11, 0), 3.918),
+            ('Off-peak', time(15, 0), time(17, 0), 3.918)
+        ],
+        'fixed_daily_charge': 32.757,  # same as 017
+        'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]
+    },
     '090': {
         'name': 'Component Charge Applicability',
         'periods': [
@@ -83,6 +98,17 @@ tariffs = {
     }
 }
 
+feed_in_tariffs = {
+    '026': {
+        'name': 'Battery Feed-in Trial',
+        'periods': [
+            ('Peak', time(17, 0), time(21, 0), 12.36),
+            ('Off-peak', time(21, 0), time(7, 0), 0.0),
+            ('Solar Soak', time(10, 0), time(15, 0), -1.0)
+        ],
+        'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]
+    }
+}
 
 def get_periods(tariff_code: str):
     tariff = tariffs.get(tariff_code)
@@ -145,3 +171,34 @@ def convert(interval_datetime: datetime, tariff_code: str, rrp: float):
     slope = 1.037869032618134
     intercept = 5.586606750833143
     return rrp_c_kwh * slope + intercept
+
+def convert_feed_in_tariff(interval_datetime: datetime, tariff_code: str, rrp: float):
+    """
+    Convert RRP from $/MWh to c/kWh for Evoenergy feed-in tariffs.
+
+    Parameters:
+    - interval_datetime (datetime): The interval datetime.
+    - tariff_code (str): The feed-in tariff code.
+    - rrp (float): The Regional Reference Price in $/MWh.
+
+    Returns:
+    - float: The total feed-in price in c/kWh.
+    """
+    interval_time = interval_datetime.astimezone(ZoneInfo(time_zone())).time()
+    rrp_c_kwh = rrp / 10
+
+    feed_in_tariff = feed_in_tariffs.get(tariff_code)
+    if not feed_in_tariff:
+        return rrp_c_kwh
+
+    current_month = interval_datetime.month
+    is_peak_month = current_month in feed_in_tariff.get('peak_months', [])
+
+    for period_name, start, end, rate in feed_in_tariff['periods']:
+        if period_name == 'Peak' and not is_peak_month:
+            continue
+
+        if start <= interval_time < end or (start > end and (interval_time >= start or interval_time < end)):
+            return rrp_c_kwh + rate
+
+    return rrp_c_kwh

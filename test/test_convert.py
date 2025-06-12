@@ -1,7 +1,7 @@
 # test/test_convert.py
 import unittest
 from datetime import datetime
-from aemo_to_tariff import spot_to_tariff, get_daily_fee, calculate_demand_fee
+from aemo_to_tariff import spot_to_tariff, get_daily_fee, calculate_demand_fee, spot_to_feed_in_tariff
 
 class TestTariffConversions(unittest.TestCase):
 
@@ -72,6 +72,13 @@ class TestTariffConversions(unittest.TestCase):
     def test_sapn_daily_fee(self):
         self.assertAlmostEqual(get_daily_fee('SAPN', 'RTOU'), 57.53, 4)
         self.assertAlmostEqual(get_daily_fee('SAPN', 'SBTOU'), 72.59, 4)
+
+    def test_evo_battery_trial(self):
+        interval_time = datetime.strptime('2024-07-05 14:00+10:00', '%Y-%m-%d %H:%M%z')
+        self.assertAlmostEqual(spot_to_tariff(interval_time, 'Evoenergy', '026', 100), 12.85, 2)
+        self.assertAlmostEqual(spot_to_feed_in_tariff(interval_time, 'Evoenergy', '026', 200), 20.84, 2)
+        interval_time = datetime.strptime('2024-07-05 19:00+10:00', '%Y-%m-%d %H:%M%z')
+        self.assertAlmostEqual(spot_to_feed_in_tariff(interval_time, 'Evoenergy', '026', 200), 34.2, 2)
 
     def test_sapn_demand_fee(self):
         self.assertAlmostEqual(calculate_demand_fee('SAPN', 'RTOU', 5.5, 31), 0, 4)
