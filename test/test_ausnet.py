@@ -17,8 +17,11 @@ class TestAusNet(unittest.TestCase):
     def test_nast11s_offpeak(self):
         interval_time = datetime(2025, 6, 12, 3, 0, tzinfo=ZoneInfo(time_zone()))
         tariff_code = 'NAST11S'
-        rrp = 80.0  # $/MWh → 8 c/kWh
-        expected_price = 8.0 + 18.0
+        # amber_sell_price': 47.33081,
+        # amber_buy_price': 63.83136,
+        # amber_spot_per_kwh': 48.07081,
+        rrp = 480.0  # $/MWh → 8 c/kWh
+        expected_price = 66.0
         actual_price = convert(interval_time, tariff_code, rrp)
         self.assertAlmostEqual(actual_price, expected_price, places=2)
 
