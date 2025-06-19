@@ -6,13 +6,14 @@ from zoneinfo import ZoneInfo
 def time_zone():
     return 'Australia/Melbourne'
 
-# Example tariff: NAST11S (Small Business TOU – AusNet Services)
+# Example tariff: NAST11S (Small residential time‑of‑use with standard feed‑in)
 tariffs = {
     'NAST11S': {
         'name': 'Small Business Time of Use',
         'periods': [
-            ('Peak', time(7, 0), time(23, 0), 35.0),
-            ('Off-Peak', time(23, 0), time(7, 0), 18.0)
+            ('Peak', time(15, 0), time(21, 0), 5.5+22.4055),
+            ('Off-Peak', time(0, 0), time(15, 0), 14.6394),
+            ('Off-Peak', time(21, 0), time(0, 0), 14.6394)
         ]
     }
 }
