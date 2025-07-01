@@ -31,8 +31,8 @@ tariffs = {
     'EA025': {
         'name': 'Residential ToU',
         'periods': [
-            ('Peak', time(15, 0), time(21, 0), 26.8969),
-            ('Off-peak', time(21, 0), time(15, 0), 4.6503)
+            ('Peak', time(15, 0), time(21, 0), 29.2450),
+            ('Off-peak', time(21, 0), time(15, 0), 5.1535)
         ],
         'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     },
@@ -51,16 +51,16 @@ tariffs = {
     'EA225': {
         'name': 'Small Business ToU',
         'periods': [
-            ('Peak', time(15, 0), time(21, 0), 33.0130),
-            ('Off-peak', time(21, 0), time(15, 0), 5.2507)
+            ('Peak', time(15, 0), time(21, 0), 34.8921),
+            ('Off-peak', time(21, 0), time(15, 0), 5.7619)
         ],
         'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     },
     'EA305': {
         'name': 'Small Business LV',
         'periods': [
-            ('Peak', time(15, 0), time(22, 59), 6.8777),
-            ('Off-Peak', time(21, 0), time(14, 59), 1.5231)
+            ('Peak', time(15, 0), time(22, 59), 7.3723),
+            ('Off-Peak', time(21, 0), time(14, 59), 1.6800)
         ]
     }
 }
