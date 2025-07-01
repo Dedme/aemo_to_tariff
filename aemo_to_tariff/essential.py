@@ -20,6 +20,17 @@ def battery_tariff(customer_type: str):
     elif customer_type == 'Business':
         return 'BLNT2AL'
 
+# BLNREX2 is a feed-in tariff, not a TOU tariff. -11.5725 - 0.8172
+feed_in_tariffs = {
+    'BLNREX2': {
+        'name': 'LV Residential Solar Export',
+        'periods': [
+            ('Peak', time(16, 0), time(20, 0), 11.5725),
+            ('Off Peak', time(0, 0), time(10, 0), -0.8172)
+        ]
+    }
+}
+
 tariffs = {
     # ------------------------------
     # Residential Anytime (Flat)
@@ -186,7 +197,64 @@ tariffs = {
             ('Off-Peak', time(22, 0), time(7, 0), 5.1286),
         ]
     },
+# ------------------------------
+    # LV Residential ToU - Sun Soaker 
+    # ------------------------------
+    'BLNRSS2': {
+        'name': 'LV Residential ToU - Sun Soaker',
+        'periods': [
+            ('Peak', time(7, 0), time(9, 0), 16.9522),\
+            ('Off-Peak', time(22, 0), time(7, 0), 5.8530),
+        ]
+    },
+
+    # -----------------------------------------------------
+    # BLNBSS1 LV Small Business ToU - Sun Soaker 
+    # Peak: 5–8pm; Shoulder: 7am–5pm, 8–10pm; Off-peak: 10pm–7am
+    # -----------------------------------------------------
+    'BLNBSS1': {
+        'name': 'LV Small Business TOU - Sun Soaker',
+        'periods': [
+            ('Peak', time(17, 0), time(20, 0), 17.9646),
+            ('Off-Peak', time(22, 0), time(7, 0), 8.1015),
+        ]
+    },
+
 }
+
+
+def get_periods(tariff_code: str):
+    """
+    Retrieve the list of TOU periods for the given tariff code.
+    Each period is (period_name, start_time, end_time, rate_cents_kwh).
+    """
+    tariff = tariffs.get(tariff_code)
+    if not tariff:
+        raise ValueError(f"Unknown tariff code: {tariff_code}")
+    return tariff['periods']
+
+def convert_feed_in_tariff(interval_datetime: datetime, tariff_code: str, rrp: float):
+    """
+    Convert RRP from $/MWh to c/kWh for SA Power Networks.
+
+    Parameters:
+    - interval_datetime (datetime): The interval datetime.
+    - tariff_code (str): The tariff code.
+    - rrp (float): The Regional Reference Price in $/MWh.
+
+    Returns:
+    - float: The price in c/kWh.
+    """
+    interval_time = interval_datetime.astimezone(ZoneInfo(time_zone())).time()
+    rrp_c_kwh = rrp / 10
+    tariff = tariffs[tariff_code]
+    if tariff_code in feed_in_tariffs:
+        tariff = feed_in_tariffs[tariff_code]
+        for period, start, end, rate in tariff['periods']:
+            if start <= interval_time < end:
+                total_price = rrp_c_kwh + rate
+                return total_price
+    return rrp_c_kwh  # Fallback if no specific feed-in tariff found
 
 # Daily fees in dollars per day
 daily_fees = {

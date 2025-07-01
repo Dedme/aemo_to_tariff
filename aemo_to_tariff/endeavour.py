@@ -33,12 +33,12 @@ tariffs = {
     'N71': {
         'name': 'Residential Seasonal TOU',
         'periods': [
-            ('High-season Peak', time(16, 0), time(20, 0), 20.7634),
-            ('Low-season Peak', time(16, 0), time(20, 0),  12.9972),
-            ('Solar Soak', time(10, 0), time(14, 0), 2.9642),
-            ('Off Peak', time(0, 0), time(10, 0), 9.7277),
-            ('Off Peak', time(14, 0), time(16, 0), 9.7277),
-            ('Off Peak', time(20, 0), time(23, 59), 9.7277)
+            ('High-season Peak', time(16, 0), time(20, 0), 21.7964),
+            ('Low-season Peak', time(16, 0), time(20, 0),  13.8419),
+            ('Solar Soak', time(10, 0), time(14, 0), 3.4252),
+            ('Off Peak', time(0, 0), time(10, 0), 10.4931),
+            ('Off Peak', time(14, 0), time(16, 0), 10.4931),
+            ('Off Peak', time(20, 0), time(23, 59), 10.4931)
         ],
         'fixed_daily_charge': 55.5325,
         'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
@@ -53,12 +53,12 @@ tariffs = {
     'N91': {
         'name': 'GS Seasonal TOU',
         'periods': [
-            ('High-season Peak', time(16, 0), time(20, 0), 22.2811),
-            ('Low-season Peak', time(16, 0), time(20, 0), 14.5149),
-            ('Solar Soak', time(10, 0), time(14, 0), 3.6436),
-            ('Off Peak', time(0, 0), time(10, 0), 11.2454),
-            ('Off Peak', time(14, 0), time(16, 0), 11.2454),
-            ('Off Peak', time(20, 0), time(23, 59), 11.2454)
+            ('High-season Peak', time(16, 0), time(20, 0), 23.5007),
+            ('Low-season Peak', time(16, 0), time(20, 0), 15.5462),
+            ('Solar Soak', time(10, 0), time(14, 0), 4.1635),
+            ('Off Peak', time(0, 0), time(10, 0), 12.1974),
+            ('Off Peak', time(14, 0), time(16, 0), 12.1974),
+            ('Off Peak', time(20, 0), time(23, 59), 12.1974)
         ],
         'fixed_daily_charge': 78.0125,
         'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
@@ -66,11 +66,23 @@ tariffs = {
     'N19': {
         'name': 'LV Seasonal STOU Demand',
         'periods': [
-            ('High-season Peak', time(16, 0), time(20, 0), 5.20),
-            ('Low-season Peak', time(16, 0), time(20, 0), 4.65),
-            ('Off Peak', time(0, 0), time(10, 0), 3.40),
-            ('Off Peak', time(14, 0), time(16, 0), 3.40),
-            ('Off Peak', time(20, 0), time(23, 59), 3.40)
+            ('High-season Peak', time(16, 0), time(20, 0), 5.4400),
+            ('Low-season Peak', time(16, 0), time(20, 0), 4.8861),
+            ('Off Peak', time(0, 0), time(10, 0), 3.6458),
+            ('Off Peak', time(14, 0), time(16, 0), 3.6458),
+            ('Off Peak', time(20, 0), time(23, 59), 3.6458)
+        ],
+        'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
+    }
+}
+
+feed_in_tariffs = {
+    'N61': {
+        'name': 'Residential Electrify',
+        'periods': [
+            ('High-season Peak', time(16, 0), time(20, 0), 11.3033),
+            ('Low-season Peak', time(16, 0), time(20, 0), 3.3488),
+            ('Off Peak', time(0, 0), time(10, 0), -1.7900)
         ],
         'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     }

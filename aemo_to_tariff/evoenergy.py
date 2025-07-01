@@ -29,47 +29,47 @@ tariffs = {
     '015': {
         'name': 'Residential TOU Network (closed)',
         'periods': [
-            ('Peak', time(7, 0), time(9, 0), 14.063),
-            ('Peak', time(17, 0), time(20, 0), 14.063),
-            ('Shoulder', time(9, 0), time(17, 0), 6.285),
-            ('Shoulder', time(20, 0), time(22, 0), 6.285),
-            ('Off-peak', time(22, 0), time(7, 0), 3.210)
+            ('Peak', time(7, 0), time(9, 0), 16.095),
+            ('Peak', time(17, 0), time(20, 0), 16.095),
+            ('Shoulder', time(9, 0), time(17, 0), 8.199),
+            ('Shoulder', time(20, 0), time(22, 0), 8.199),
+            ('Off-peak', time(22, 0), time(7, 0), 4.828)
         ],
         'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     },
     '016': {
         'name': 'Residential TOU Network (closed) XMC',
         'periods': [
-            ('Peak', time(7, 0), time(9, 0), 14.063),
-            ('Peak', time(17, 0), time(20, 0), 14.063),
-            ('Shoulder', time(9, 0), time(17, 0), 6.285),
-            ('Shoulder', time(20, 0), time(22, 0), 6.285),
-            ('Off-peak', time(22, 0), time(7, 0), 3.210)
+            ('Peak', time(7, 0), time(9, 0), 16.095),
+            ('Peak', time(17, 0), time(20, 0), 16.095),
+            ('Shoulder', time(9, 0), time(17, 0), 8.199),
+            ('Shoulder', time(20, 0), time(22, 0), 8.199),
+            ('Off-peak', time(22, 0), time(7, 0), 4.828)
         ],
         'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     },
     '017': {
         'name': 'New Residential TOU Network',
         'periods': [
-            ('Peak', time(7, 0), time(9, 0), 14.109),
-            ('Peak', time(17, 0), time(21, 0), 14.109),
-            ('Solar Soak', time(11, 0), time(15, 0), 1.757),
-            ('Off-peak', time(21, 0), time(7, 0), 3.918),
-            ('Off-peak', time(9, 0), time(11, 0), 3.918),
-            ('Off-peak', time(15, 0), time(17, 0), 3.918)
+            ('Peak', time(7, 0), time(9, 0), 16.184),
+            ('Peak', time(17, 0), time(21, 0), 16.184),
+            ('Solar Soak', time(11, 0), time(15, 0), 3.261),
+            ('Off-peak', time(21, 0), time(7, 0), 5.665),
+            ('Off-peak', time(9, 0), time(11, 0), 5.665),
+            ('Off-peak', time(15, 0), time(17, 0), 5.665)
         ],
-        'fixed_daily_charge': 32.757,  # Fixed daily charge in c/day
+        'fixed_daily_charge': 34.984,  # Fixed daily charge in c/day
         'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
     },
     '018': {
         'name': 'New Residential TOU Network XMC',
         'periods': [
-            ('Peak', time(7, 0), time(9, 0), 14.109),
-            ('Peak', time(17, 0), time(21, 0), 14.109),
-            ('Solar Soak', time(11, 0), time(15, 0), 1.757),
-            ('Off-peak', time(21, 0), time(7, 0), 3.918),
-            ('Off-peak', time(9, 0), time(11, 0), 3.918),
-            ('Off-peak', time(15, 0), time(17, 0), 3.918)
+            ('Peak', time(7, 0), time(9, 0), 16.184),
+            ('Peak', time(17, 0), time(21, 0), 16.184),
+            ('Solar Soak', time(11, 0), time(15, 0), 3.261),
+            ('Off-peak', time(21, 0), time(7, 0), 5.665),
+            ('Off-peak', time(9, 0), time(11, 0), 5.665),
+            ('Off-peak', time(15, 0), time(17, 0), 5.665)
         ],
         'fixed_daily_charge': 48.257,  # Fixed daily charge in c/day
         'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
@@ -77,12 +77,12 @@ tariffs = {
     '026': {
         'name': 'Residential Demand',
         'periods': [
-            ('Peak', time(7, 0), time(9, 0), 14.109),
-            ('Peak', time(17, 0), time(21, 0), 14.109),
-            ('Solar Soak', time(11, 0), time(15, 0), 1.757),
-            ('Off-peak', time(21, 0), time(7, 0), 3.918),
-            ('Off-peak', time(9, 0), time(11, 0), 3.918),
-            ('Off-peak', time(15, 0), time(17, 0), 3.918)
+            ('Peak', time(7, 0), time(9, 0), 16.184),
+            ('Peak', time(17, 0), time(21, 0), 16.184),
+            ('Solar Soak', time(11, 0), time(15, 0), 3.261),
+            ('Off-peak', time(21, 0), time(7, 0), 5.665),
+            ('Off-peak', time(9, 0), time(11, 0), 5.665),
+            ('Off-peak', time(15, 0), time(17, 0), 5.665)
         ],
         'fixed_daily_charge': 32.757,  # same as 017
         'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]
