@@ -46,35 +46,36 @@ tariffs = {
     'RTOU': {
         'name': 'Residential Time of Use',
         'periods': [
-            ('Peak', time(16, 0), time(20, 0), 18.95),
-            ('Peak', time(6, 0), time(10, 0), 18.95),
-            ('Off-peak', time(20, 0), time(6, 0), 9.47),
+            ('Peak', time(17, 0), time(20, 0), 18.95),
+            ('Shoulder', time(16, 0), time(17, 0), 9.47),
+            ('Shoulder', time(20, 0), time(10, 0), 9.47),
             ('Solar Sponge', time(10, 0), time(16, 0), 4.74)
         ]
     },
     'RPRO': {
         'name': 'Residential Prosumer',
         'periods': [
-            ('Peak', time(16, 0), time(20, 0), 18.95),
-            ('Peak', time(6, 0), time(10, 0), 18.95),
-            ('Off-peak', time(20, 0), time(6, 0), 9.47),
+            ('Peak', time(17, 0), time(20, 0), 18.95),
+            ('Shoulder', time(16, 0), time(17, 0), 9.47),
+            ('Shoulder', time(20, 0), time(10, 0), 9.47),
             ('Solar Sponge', time(10, 0), time(16, 0), 4.74)
         ]
     },
     'RELE': {
         'name': 'Residential Electrify',
         'periods': [
-            ('Peak', time(16, 0), time(20, 0), 31.98),
-            ('Peak', time(6, 0), time(10, 0), 20.669),
-            ('Off-peak', time(20, 0), time(6, 0), 9.49),
+            ('Peak', time(17, 0), time(20, 0), 31.98),
+            ('Shoulder', time(16, 0), time(17, 0), 9.49),
+            ('Shoulder', time(20, 0), time(10, 0), 9.49),
             ('Solar Sponge', time(10, 0), time(16, 0), 2.84)
         ]
     },
     'RELE2W': {
         'name': 'Residential Electrify',
         'periods': [
-            ('Peak', time(16, 0), time(21, 0), 31.98),
-            ('Off-peak', time(20, 0), time(6, 0), 9.49),
+            ('Peak', time(17, 0), time(21, 0), 31.98),
+            ('Shoulder', time(16, 0), time(17, 0), 9.49),
+            ('Shoulder', time(20, 0), time(10, 0), 9.49),
             ('Solar Sponge', time(10, 0), time(16, 0), 2.84)
         ]
     },
