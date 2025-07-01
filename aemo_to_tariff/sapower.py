@@ -27,9 +27,10 @@ feed_in_tariffs = {
     'RELE2W': {
         'name': 'Residential Electrify',
         'periods': [
-            ('Peak', time(16, 0), time(21, 0), 12.25),
-            ('Off-peak', time(20, 0), time(6, 0), 0),
-            ('Solar Sponge', time(10, 0), time(15, 0), -1)
+            ('Peak', time(17, 0), time(21, 0), 12.25),
+            ('Off-peak', time(21, 0), time(10, 0), 0),
+            ('Off-peak', time(16, 0), time(17, 0), 0),
+            ('Solar Sponge', time(10, 0), time(16, 0), -1)
         ]
     },
     'RTOU': {
@@ -38,7 +39,7 @@ feed_in_tariffs = {
             ('Peak', time(16, 0), time(0, 0), 0),
             ('Peak', time(6, 0), time(10, 0), 0),
             ('Off-peak', time(0, 0), time(6, 0), 0),
-            ('Solar Sponge', time(10, 0), time(15, 0), 1.00)
+            ('Solar Sponge', time(10, 0), time(16, 0), 1.00)
         ]
     },
 
@@ -48,7 +49,7 @@ tariffs = {
     'RSR': {
         'name': 'Residential Single Rate',
         'periods': [
-            ('Anytime', time(0, 0), time(23, 59), 15.04)
+            ('Anytime', time(0, 0), time(23, 59), 14.51)
         ]
     },
     'RTOU': {
