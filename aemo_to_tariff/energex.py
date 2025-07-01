@@ -76,11 +76,11 @@ tariffs = {
     '6900': {
         'name': 'Residential Time of Use Energy',
         'periods': [
-            ('Evening', time(16, 0), time(21, 0), 17.861),
-            ('Overnight', time(21, 0), time(9, 0), 6.268),
-            ('Day', time(9, 0), time(16, 0), 4.066)
+            ('Evening', time(16, 0), time(21, 0), 19.367),
+            ('Overnight', time(21, 0), time(9, 0), 4.868),
+            ('Day', time(9, 0), time(16, 0), 0.00476)
         ],
-        'rate': {'Evening': 17.861, 'Overnight': 6.268, 'Day': 4.066}
+        'rate': {'Evening': 19.367, 'Overnight': 4.868, 'Day': 0.00476}
     },
     '3600': {
         'name': 'Small Business Demand',
