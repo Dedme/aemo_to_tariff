@@ -27,12 +27,20 @@ feed_in_tariffs = {
     'RELE2W': {
         'name': 'Residential Electrify',
         'periods': [
-            ('Peak', time(17, 0), time(21, 0), 12.36),
+            ('Peak', time(16, 0), time(21, 0), 12.25),
             ('Off-peak', time(20, 0), time(6, 0), 0),
             ('Solar Sponge', time(10, 0), time(15, 0), -1)
-        ],
-        'peak_months': [11, 12, 1, 2, 3, 6, 7, 8]  # November–March and June–August
-    }
+        ]
+    },
+    'RTOU': {
+        'name': 'Residential Time of Use',
+        'periods': [
+            ('Peak', time(16, 0), time(0, 0), 0),
+            ('Peak', time(6, 0), time(10, 0), 0),
+            ('Off-peak', time(0, 0), time(6, 0), 0),
+            ('Solar Sponge', time(10, 0), time(15, 0), 1.00)
+        ]
+    },
 
 }
 
@@ -46,10 +54,10 @@ tariffs = {
     'RTOU': {
         'name': 'Residential Time of Use',
         'periods': [
-            ('Peak', time(15, 0), time(20, 0), 20.669),
-            ('Peak', time(6, 0), time(10, 0), 20.669),
-            ('Off-peak', time(20, 0), time(6, 0), 8.316),
-            ('Solar Sponge', time(10, 0), time(15, 0), 4.191)
+            ('Peak', time(16, 0), time(0, 0), 18.95),
+            ('Peak', time(6, 0), time(10, 0), 18.95),
+            ('Off-peak', time(0, 0), time(6, 0), 9.47),
+            ('Solar Sponge', time(10, 0), time(16, 0), 4.74)
         ]
     },
     'RPRO': {
@@ -64,18 +72,19 @@ tariffs = {
     'RELE': {
         'name': 'Residential Electrify',
         'periods': [
-            ('Peak', time(15, 0), time(20, 0), 33.09),
-            ('Peak', time(6, 0), time(10, 0), 20.669),
-            ('Off-peak', time(20, 0), time(6, 0), 9.78),
-            ('Solar Sponge', time(10, 0), time(15, 0), 3.01)
+            ('Peak', time(16, 0), time(21, 0), 31.98),
+            ('Off-peak', time(21, 0), time(10, 0), 9.49),
+            ('Off-peak', time(16, 0), time(17, 0), 9.49),
+            ('Solar Sponge', time(10, 0), time(16, 0), 2.84)
         ]
     },
     'RELE2W': {
         'name': 'Residential Electrify',
         'periods': [
-            ('Peak', time(17, 0), time(21, 0), 33.09),
-            ('Off-peak', time(20, 0), time(6, 0), 9.78),
-            ('Solar Sponge', time(10, 0), time(15, 0), 3.01)
+            ('Peak', time(16, 0), time(21, 0), 31.98),
+            ('Off-peak', time(21, 0), time(10, 0), 9.49),
+            ('Off-peak', time(16, 0), time(17, 0), 9.49),
+            ('Solar Sponge', time(10, 0), time(16, 0), 2.84)
         ]
     },
     'SBTOU': {
@@ -94,11 +103,14 @@ tariffs = {
     }
 }
 
+# $0.0255 Meter Charge
+# $0.6185 Supply Rate
+# 64.40c
 daily_fees = {
-    'RSR': 57.53,
-    'RTOU': 57.53,
-    'RPRO': 57.53,
-    'RELE': 57.53,
+    'RSR': 64.40,
+    'RTOU': 64.40, 
+    'RPRO': 64.40,
+    'RELE': 64.40,
     'SBTOU': 72.59,
     'SBTOUE': 72.59
 }
